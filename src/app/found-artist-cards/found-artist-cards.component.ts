@@ -22,6 +22,7 @@ export class FoundArtistCardsComponent implements OnInit {
     }
 
     this.apiRequestsService.getArtists().subscribe((artists: ApiResponseModel) => {
+      this.foundArtists = [];
       this.foundArtists.push(artists);
     });
   }
