@@ -1,0 +1,9 @@
+<div class="container">
+    <div>
+        <mat-icon>search</mat-icon>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <input matInput placeholder="Search Artist" [(ngModel)]="searchArtist" (ngModelChange)="searchArtistBehaviorSubject.next($event)" >
+        </mat-form-field>
+    </div>
+</div>
