@@ -13,4 +13,11 @@ export interface ApiResponseModel {
     share: string,
     tracklist: string,
     type: string,
+    error?: ApiErrorResponseModel,
+}
+
+export interface ApiErrorResponseModel {
+    code: number,
+    message: string,
+    type: string,
 }
