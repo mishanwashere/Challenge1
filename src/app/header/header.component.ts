@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ApiRequestsService } from '../services/api-requests.service';
-
-import { debounceTime, filter } from "rxjs/operators";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +11,6 @@ import { debounceTime, filter } from "rxjs/operators";
 export class HeaderComponent implements OnInit {
 
   public searchArtist: string = "";
-
   public searchArtistBehaviorSubject = new BehaviorSubject<string>("");
 
   constructor(
@@ -21,9 +19,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchArtistBehaviorSubject.pipe(
-      filter(searchValue => searchValue.length > 0),
       debounceTime(800),
     ).subscribe(searchValue => {
+      if (searchValue === "") {
+        return;
+      }
+
       this.apiRequestsService.getArtistRequest(searchValue);
     })
   }
