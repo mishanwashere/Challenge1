@@ -1,4 +1,9 @@
 <div class="container">
+
+    <ng-container *ngIf="foundArtists.length === 0">
+        <h2>Search for an Artist</h2>
+    </ng-container>
+
     <ng-container *ngFor="let foundArtist of foundArtists">
         <div class="artist">
             <div>
