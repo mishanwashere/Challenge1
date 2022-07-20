@@ -5,8 +5,12 @@
                 <img src="{{foundArtist.picture_medium}}" />
             </div>
             <div>
-                <span>{{foundArtist.name}}</span>
-                <span>{{foundArtist.nb_fan}}</span>
+                <p>{{foundArtist.name}}</p>
+                <p>{{foundArtist.nb_fan}} Fans</p>
+
+                <ng-container *ngIf="!mobile">
+                    <p>{{foundArtist.nb_album}}</p>
+                </ng-container>
             </div>
         </div>
     </ng-container>

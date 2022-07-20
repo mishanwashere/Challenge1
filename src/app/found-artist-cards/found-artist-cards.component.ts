@@ -10,12 +10,17 @@ import { ApiResponseModel } from '../services/model/api-response.model';
 export class FoundArtistCardsComponent implements OnInit {
 
   public foundArtists: ApiResponseModel[] = [];
+  public mobile: boolean = false;
 
   constructor(
     private apiRequestsService: ApiRequestsService,
   ) { }
 
   ngOnInit(): void {
+    if (window.screen.width <= 768) { // 768px portrait
+      this.mobile = true;
+    }
+
     this.apiRequestsService.getArtists().subscribe((artists: ApiResponseModel) => {
       this.foundArtists.push(artists);
     });
