@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { ApiRequestEnum } from './model/api-request.enum';
+import { ApiResponseModel } from './model/api-response.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiRequestsService {
 
-  private currentSearchedArtists: any = null;
+  private currentSearchedArtists: ApiResponseModel[] = [];
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getArtistRequest(searchValue: string) {
-    const proxyUrl = "http://cors-anywhere.herokuapp.com/";
-    const apiUrl = "https://api.deezer.com/";
+    const proxyUrl = ApiRequestEnum.ProxyUrl;
+    const apiUrl = ApiRequestEnum.ApiUrl;
 
-    this.http.get(proxyUrl + apiUrl + "artist/" + searchValue).subscribe(responseData => {
-      this.currentSearchedArtists = responseData;
+    this.http.get<ApiResponseModel>(proxyUrl + apiUrl + "artist/" + searchValue).subscribe(responseData => {
+      this.currentSearchedArtists.push(responseData);
     });
   }
 }
