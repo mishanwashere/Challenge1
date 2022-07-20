@@ -9,14 +9,17 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 // Custom Component Imports
 import { HeaderComponent } from './header/header.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FoundArtistCardsComponent } from './found-artist-cards/found-artist-cards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    SearchBarComponent,
     FoundArtistCardsComponent
   ],
   imports: [
@@ -26,7 +29,8 @@ import { FoundArtistCardsComponent } from './found-artist-cards/found-artist-car
     BrowserAnimationsModule,
     MatIconModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,11 @@
+.container {
+    contain: content;
+
+    .search-field {
+        width: 100%;
+    }
+
+    .secondary {
+        background-color: #3f51b5;
+    }
+}
