@@ -17,9 +17,11 @@ export class FoundArtistCardsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (window.screen.width <= 768) { // 768px portrait
+    // Ugly static implementation. Potential solutions attribute directive.
+    if (window.screen.width <= 768) { // 768 px
       this.mobile = true;
     }
+    // End
 
     this.apiRequestsService.getArtists().subscribe((artists: ApiResponseModel) => {
       this.foundArtists = [];

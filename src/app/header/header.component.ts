@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ApiRequestsService } from '../services/api-requests.service';
 import { debounceTime } from "rxjs/operators";
 
@@ -11,7 +11,7 @@ import { debounceTime } from "rxjs/operators";
 export class HeaderComponent implements OnInit {
 
   public searchArtist: string = "";
-  public searchArtistBehaviorSubject = new BehaviorSubject<string>("");
+  public searchArtistSubject = new Subject<string>();
 
   private previousSearchValue: string = "";
 
@@ -20,16 +20,16 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.searchArtistBehaviorSubject.pipe(
+    this.searchArtistSubject.pipe(
       debounceTime(800),
     ).subscribe(searchValue => {
-      if (searchValue === "" || this.previousSearchValue === searchValue) {
+      if (searchValue === "" || this.previousSearchValue === searchValue) { // Prevent empty string requests OR if the previous search equals the current search request.
         return;
       }
 
       this.previousSearchValue = searchValue;
 
-      this.apiRequestsService.getArtistRequest(searchValue);
+      this.apiRequestsService.getArtistsRequest(searchValue); // API request.
     })
   }
 }

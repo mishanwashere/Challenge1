@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
 // Angular Material Imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 // Custom Component Imports
 import { HeaderComponent } from './header/header.component';
-import { MatInputModule } from '@angular/material/input';
 import { FoundArtistCardsComponent } from './found-artist-cards/found-artist-cards.component';
 
 @NgModule({

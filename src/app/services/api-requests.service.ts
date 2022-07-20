@@ -16,20 +16,20 @@ export class ApiRequestsService {
     private http: HttpClient,
   ) { }
 
-  getArtistRequest(searchValue: string) {
+  getArtistsRequest(searchValue: string) {
     const proxyUrl = ApiRequestEnum.ProxyUrl;
     const apiUrl = ApiRequestEnum.ApiUrl;
 
-    this.http.get<ApiResponseModel>(proxyUrl + apiUrl + "artist/" + searchValue).subscribe((responseData: ApiResponseModel) => {
-      this.setArists(responseData);
+    this.http.get<ApiResponseModel>(proxyUrl + apiUrl + "artist/" + searchValue).subscribe((responseData: ApiResponseModel) => { // Could probably clean up this built up URL.
+      this.setArists(responseData); // call setter.
     });
   }
 
-  getArtists(): Observable<ApiResponseModel> {
-    return this.currentSearchedArtists.asObservable();
+  getArtists(): Observable<ApiResponseModel> { // getter.
+    return this.currentSearchedArtists.asObservable(); // returns observable.
   }
 
-  setArists(responseData: ApiResponseModel): void {
-    this.currentSearchedArtists.next(responseData);
+  setArists(responseData: ApiResponseModel): void { // setter.
+    this.currentSearchedArtists.next(responseData); // update subject
   }
 }
