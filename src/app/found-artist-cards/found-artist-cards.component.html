@@ -1,0 +1,13 @@
+<div class="container">
+    <ng-container *ngFor="let foundArtist of foundArtists">
+        <div class="artist">
+            <div>
+                <img src="{{foundArtist.picture_medium}}" />
+            </div>
+            <div>
+                <span>{{foundArtist.name}}</span>
+                <span>{{foundArtist.nb_fan}}</span>
+            </div>
+        </div>
+    </ng-container>
+</div>

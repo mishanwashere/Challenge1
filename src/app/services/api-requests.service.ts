@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
 
 import { ApiRequestEnum } from './model/api-request.enum';
 import { ApiResponseModel } from './model/api-response.model';
@@ -9,7 +10,7 @@ import { ApiResponseModel } from './model/api-response.model';
 })
 export class ApiRequestsService {
 
-  private currentSearchedArtists: ApiResponseModel[] = [];
+  private currentSearchedArtists: Subject<ApiResponseModel> = new Subject<ApiResponseModel>();
 
   constructor(
     private http: HttpClient,
@@ -19,8 +20,16 @@ export class ApiRequestsService {
     const proxyUrl = ApiRequestEnum.ProxyUrl;
     const apiUrl = ApiRequestEnum.ApiUrl;
 
-    this.http.get<ApiResponseModel>(proxyUrl + apiUrl + "artist/" + searchValue).subscribe(responseData => {
-      this.currentSearchedArtists.push(responseData);
+    this.http.get<ApiResponseModel>(proxyUrl + apiUrl + "artist/" + searchValue).subscribe((responseData: ApiResponseModel) => {
+      this.setArists(responseData);
     });
+  }
+
+  getArtists(): Observable<ApiResponseModel> {
+    return this.currentSearchedArtists.asObservable();
+  }
+
+  setArists(responseData: ApiResponseModel): void {
+    this.currentSearchedArtists.next(responseData);
   }
 }

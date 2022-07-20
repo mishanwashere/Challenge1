@@ -11,12 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 // Custom Component Imports
 import { HeaderComponent } from './header/header.component';
 import { MatInputModule } from '@angular/material/input';
-
+import { FoundArtistCardsComponent } from './found-artist-cards/found-artist-cards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    FoundArtistCardsComponent
   ],
   imports: [
     BrowserModule,
