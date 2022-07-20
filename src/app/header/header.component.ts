@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   public searchArtist: string = "";
   public searchArtistBehaviorSubject = new BehaviorSubject<string>("");
 
+  private previousSearchValue: string = "";
+
   constructor(
     private apiRequestsService: ApiRequestsService,
   ) { }
@@ -21,9 +23,11 @@ export class HeaderComponent implements OnInit {
     this.searchArtistBehaviorSubject.pipe(
       debounceTime(800),
     ).subscribe(searchValue => {
-      if (searchValue === "") {
+      if (searchValue === "" || this.previousSearchValue === searchValue) {
         return;
       }
+
+      this.previousSearchValue = searchValue;
 
       this.apiRequestsService.getArtistRequest(searchValue);
     })
