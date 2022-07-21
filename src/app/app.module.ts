@@ -14,13 +14,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FoundArtistCardsComponent } from './found-artist-cards/found-artist-cards.component';
+import { ArtistDetailsComponent } from './artist-details/artist-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SearchBarComponent,
-    FoundArtistCardsComponent
+    FoundArtistCardsComponent,
+    ArtistDetailsComponent
   ],
   imports: [
     BrowserModule,

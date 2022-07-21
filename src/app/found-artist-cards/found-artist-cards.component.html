@@ -5,7 +5,7 @@
     </ng-container>
 
     <ng-container *ngFor="let foundArtist of foundArtists">
-        <div class="artist">
+        <div class="artist" [routerLink]="['/artist-details', foundArtist.id]">
             <div>
                 <img src="{{foundArtist.picture_medium}}" />
             </div>

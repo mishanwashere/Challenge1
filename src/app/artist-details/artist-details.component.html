@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="artist-card">
+        <div class="artist-container">
+            <img src="{{artist.picture_xl}}" />
+        </div>
+
+        <div class="artist-details">
+            <h2>{{artist.name}}</h2>
+            <h3>{{artist.nb_fan}} Fans</h3>
+        </div>
+    
+        <div class="tracklist-container">
+            <h3>Top Tracks</h3>
+
+            <ol>
+                <ng-container *ngFor="let track of artistTracks">
+                    <li>
+                        <span>
+                            {{track.title}}
+                        </span>
+                        <span>
+                            {{track.duration * 1000 | date:'mm:ss'}} <!-- Convert seconds to milliseconds then use date pipe. -->
+                        </span>
+                    </li> 
+                </ng-container>
+            </ol>
+        </div>
+    </div>
+
+    <div class="albums-container">
+        <h3>Albums</h3>
+
+        <div class="albums">
+            <ng-container *ngFor="let album of artistAlbums">
+                <div>
+                    <img src={{album.cover_medium}}/>
+                    <p>{{album.title}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
