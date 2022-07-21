@@ -91,3 +91,40 @@ https://raw.githubusercontent.com/DVT/musicdb-app-angular/master/wireframes/arti
 Artist details view [Mobile]
 
 https://raw.githubusercontent.com/DVT/musicdb-app-angular/master/wireframes/artist-details-mobile.PNG
+
+
+
+
+
+# !! Disclaimers !!
+
+## 1.
+I used https://cors-anywhere.herokuapp.com/corsdemo.
+
+## 2.
+Haven't seen an endpoint in the deezer API which returns multiple Artists. So my implementation should cater for multiple. But currently only returns one searched Artist.
+
+## 3.
+In the designs for the artist-details there is a section for the album release date, haven't seen this data in the API response,
+
+
+# !! Improvements !!
+## 1.
+The /artist endpoint returns the Artist details, and that for artist.tracklist it returned an endpoint to retrieve the relevant Tracklist data. This added more complexity to my api-request service and models. Probably could refactor and cleanup the implementation.
+
+## 2.
+Within my found-artist-cards/found-artist-cards.component.html there is a section that displays a default message before the user has searched. This needs to be refactored to a separate component or added to the app.component.html.
+
+## 3.
+Circuit Breaker Pattern needs a refactor due to the issue raised in #1.
+
+## 4.
+Styling on the artist-details.component isn't ideal.
+
+## 5.
+Implement back button to go back to the search view.
+
+## 6.
+Hide (or do something with the) search bar when in the artist-details.component.html view.
+
+# NB: I will be updating some of the above.

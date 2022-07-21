@@ -35,7 +35,7 @@ export class ArtistDetailsComponent implements OnInit {
 
     if (!this.artist || !this.artistTracks || !this.artistAlbums) { // if we don't have the relevant data, request it.
       const id: string = this.route.snapshot.paramMap.get('id')!;
-      this.apiRequestsService.getArtistsRequest(id);
+      this.apiRequestsService.getArtistsRequest(id); // /atrist endpoint can accept id and name to this works.
       this.apiRequestsService.getArtistTracklist(id);
     }
   }

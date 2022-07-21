@@ -62,6 +62,7 @@ export class ApiRequestsService {
   }
 
   public getArtistTracklist(id: string) {
+    // TODO refactor circuit breaker pattern to include this.
     this.http.get<ApiGetArtistTracklistResponseModel>(ApiRequestEnum.ProxyUrl + ApiRequestEnum.ApiUrl + "artist/" + id + "/top?limit=50").subscribe((responseData: ApiGetArtistTracklistResponseModel) => { // Could probably clean up this built up URL.
       this.setTracklist(responseData);
     });
