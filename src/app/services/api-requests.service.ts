@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject, Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { ApiRequestEnum } from './model/api-request.enum';
@@ -13,8 +13,8 @@ import { ApiGetArtistTracklistResponseModel, Album } from './model/api-get-artis
 })
 export class ApiRequestsService {
 
-  private currentSearchedArtists: Subject<ApiGetArtistsResponseModel> = new Subject<ApiGetArtistsResponseModel>();
-  private currentArtistTracklist: Subject<ApiGetArtistTracklistResponseModel> = new Subject<ApiGetArtistTracklistResponseModel>();
+  private currentSearchedArtists: ReplaySubject<ApiGetArtistsResponseModel> = new ReplaySubject<ApiGetArtistsResponseModel>(1);
+  private currentArtistTracklist: ReplaySubject<ApiGetArtistTracklistResponseModel> = new ReplaySubject<ApiGetArtistTracklistResponseModel>(1);
 
   private errorCounter: number = 0;
   private circuitStatus: string = "Closed";

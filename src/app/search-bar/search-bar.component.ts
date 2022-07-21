@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { ApiRequestsService } from '../services/api-requests.service';
 import { debounceTime } from "rxjs/operators";
 
@@ -11,7 +11,7 @@ import { debounceTime } from "rxjs/operators";
 export class SearchBarComponent implements OnInit {
 
   public searchArtist: string = "";
-  public searchArtistSubject = new Subject<string>();
+  public searchArtistSubject = new ReplaySubject<string>(1);
 
   private previousSearchValue: string = "";
 
