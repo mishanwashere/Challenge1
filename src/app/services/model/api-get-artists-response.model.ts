@@ -1,4 +1,4 @@
-export interface ApiResponseModel {
+export interface ApiGetArtistsResponseModel {
     id: number,
     link: string,
     name: string,

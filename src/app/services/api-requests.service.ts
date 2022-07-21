@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Subject, Observable, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import { ApiRequestEnum } from './model/api-request.enum';
-import { ApiResponseModel } from './model/api-response.model';
+import { ApiGetArtistsResponseModel } from './model/api-get-artists-response.model';
+import { ApiGetArtistTracklistResponseModel, Album } from './model/api-get-artist-tracklist-response.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiRequestsService {
 
-  private currentSearchedArtists: Subject<ApiResponseModel> = new Subject<ApiResponseModel>();
+  private currentSearchedArtists: Subject<ApiGetArtistsResponseModel> = new Subject<ApiGetArtistsResponseModel>();
+  private currentArtistTracklist: Subject<ApiGetArtistTracklistResponseModel> = new Subject<ApiGetArtistTracklistResponseModel>();
+
   private errorCounter: number = 0;
   private circuitStatus: string = "Closed";
 
@@ -36,7 +41,7 @@ export class ApiRequestsService {
     }
     // END
 
-    this.http.get<ApiResponseModel>(ApiRequestEnum.ProxyUrl + ApiRequestEnum.ApiUrl + "artist/" + searchValue).subscribe((responseData: ApiResponseModel) => { // Could probably clean up this built up URL.
+    this.http.get<ApiGetArtistsResponseModel>(ApiRequestEnum.ProxyUrl + ApiRequestEnum.ApiUrl + "artist/" + searchValue).subscribe((responseData: ApiGetArtistsResponseModel) => { // Could probably clean up this built up URL.
       if (responseData?.error?.code == 800) { // API doesn't return a 404 not found. Rudimentary error handling for no API response data.
         this.errorCounter++;
         return;
@@ -48,11 +53,39 @@ export class ApiRequestsService {
     });
   }
 
-  public getArtists(): Observable<ApiResponseModel> { // getter.
+  public getArtists(): Observable<ApiGetArtistsResponseModel> { // getter.
     return this.currentSearchedArtists.asObservable(); // returns observable.
   }
 
-  private setArists(responseData: ApiResponseModel): void { // setter.
+  private setArists(responseData: ApiGetArtistsResponseModel): void { // setter.
     this.currentSearchedArtists.next(responseData); // update subject
+  }
+
+  public getArtistTracklist(id: string) {
+    this.http.get<ApiGetArtistTracklistResponseModel>(ApiRequestEnum.ProxyUrl + ApiRequestEnum.ApiUrl + "artist/" + id + "/top?limit=50").subscribe((responseData: ApiGetArtistTracklistResponseModel) => { // Could probably clean up this built up URL.
+      this.setTracklist(responseData);
+    });
+  }
+
+  public getTracklist(): Observable<ApiGetArtistTracklistResponseModel> { // getter.
+    return this.currentArtistTracklist.asObservable(); // returns observable.
+  }
+
+  private setTracklist(responseData: ApiGetArtistTracklistResponseModel): void { // setter.
+    this.currentArtistTracklist.next(responseData); // update subject
+  }
+
+  public getArtistAlbums(): Observable<Album[]> {
+    return this.currentArtistTracklist.pipe(
+      mergeMap(artistTracklist => { 
+        let artistAlbums: Album[] = [];
+        
+        for (let i = 0; i < artistTracklist.total; i++) {
+          artistAlbums.push(artistTracklist.data[i].album)
+        }
+        
+        return of(artistAlbums);
+      })
+    );
   }
 }

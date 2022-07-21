@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiRequestsService } from '../services/api-requests.service';
-import { ApiResponseModel } from '../services/model/api-response.model';
+import { ApiGetArtistsResponseModel } from '../services/model/api-get-artists-response.model';
 
 @Component({
   selector: 'app-found-artist-cards',
@@ -9,7 +9,7 @@ import { ApiResponseModel } from '../services/model/api-response.model';
 })
 export class FoundArtistCardsComponent implements OnInit {
 
-  public foundArtists: ApiResponseModel[] = [];
+  public foundArtists: ApiGetArtistsResponseModel[] = [];
   public mobile: boolean = false;
 
   constructor(
@@ -23,7 +23,7 @@ export class FoundArtistCardsComponent implements OnInit {
     }
     // End
 
-    this.apiRequestsService.getArtists().subscribe((artists: ApiResponseModel) => {
+    this.apiRequestsService.getArtists().subscribe((artists: ApiGetArtistsResponseModel) => {
       this.foundArtists = [];
       this.foundArtists.push(artists);
     });
