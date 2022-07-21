@@ -16,7 +16,6 @@ export class ArtistDetailsComponent implements OnInit {
   public artist: any;
   public artistTracks: ApiTracklist[] = [];
   public artistAlbums: Album[] = [];
-  public mobile: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,12 +24,6 @@ export class ArtistDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Ugly static implementation. Potential solutions attribute directive.
-    if (window.screen.width <= 768) { // 768 px
-      this.mobile = true;
-    }
-    // End
-
     // this.route.paramMap.pipe(
     //   switchMap(params => {
     //     let id = params.get('id')!;
