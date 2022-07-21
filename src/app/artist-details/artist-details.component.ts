@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiRequestsService } from '../services/api-requests.service';
-import { ApiGetArtistsResponseModel } from '../services/model/api-get-artists-response.model';
-import { ApiGetArtistTracklistResponseModel, ApiTracklist, Album } from '../services/model/api-get-artist-tracklist-response.model';
-import { of } from 'rxjs';
+import { ApiTracklist, Album } from '../services/model/api-get-artist-tracklist-response.model';
 
 @Component({
   selector: 'app-artist-details',
@@ -24,28 +21,23 @@ export class ArtistDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.route.paramMap.pipe(
-    //   switchMap(params => {
-    //     let id = params.get('id')!;
-    //     return this.apiRequestsService.getArtistsRequest(id);
-    //   })
-    // ).subscribe((data) => {
-    //   this.artist = data;
-    // });
+    this.apiRequestsService.getArtists().subscribe((artistDetails) => {
+      this.artist = artistDetails;
+    })
 
-    this.apiRequestsService.getArtistsRequest("210807");
-    this.apiRequestsService.getArtists().subscribe((data)=> {
-      this.artist = data;
-    });
-
-    this.apiRequestsService.getArtistTracklist("210807");
-    this.apiRequestsService.getTracklist().subscribe((artistTracklist)=> {
+    this.apiRequestsService.getTracklist().subscribe((artistTracklist) => {
       this.artistTracks = artistTracklist.data;
+    })
+
+    this.apiRequestsService.getArtistAlbums().subscribe((artistAlbums) => {
+      this.artistAlbums = artistAlbums;
     });
 
-    this.apiRequestsService.getArtistAlbums().subscribe((albums) => {
-      this.artistAlbums = albums;
-    });
+    if (!this.artist || !this.artistTracks || !this.artistAlbums) { // if we don't have the relevant data, request it.
+      const id: string = this.route.snapshot.paramMap.get('id')!;
+      this.apiRequestsService.getArtistsRequest(id);
+      this.apiRequestsService.getArtistTracklist(id);
+    }
   }
 
 }
